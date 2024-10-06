@@ -13,12 +13,41 @@ public class wordSearch {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("How many rows");
+        System.out.print("How many rows: ");
         int rows = scanner.nextInt();
-        System.out.print("How many columns");
+        System.out.print("How many columns: ");
         int cols = scanner.nextInt();
-        System.out.print("Enter the minimum words of length");
+        System.out.print("Enter the minimum words of length: ");
         int words = scanner.nextInt();
+
+        char[][] grid = generateGrid(rows, cols);
+
+        ArrayList<String> wordList = new ArrayList<>();
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("words.txt"));
+
+            String line;
+
+            // Proceed with reading from the file...
+            try {
+                while((line = reader.readLine()) != null) {
+                    if(line.length() == words){
+                        wordList.add(line);
+                    }
+                }
+                
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+        
+    }
+
+    public static char[][] generateGrid(int rows, int cols){
 
         char grid[][] = new char[rows][cols];
         
@@ -37,7 +66,6 @@ public class wordSearch {
                     grid[i][j] = CONSONANTS[rand.nextInt(CONSONANTS.length)];
                 } else {
                     grid[i][j] = VOWELS[rand.nextInt(VOWELS.length)];
-
                 }
 
                 System.out.print(grid[i][j] + " ");
@@ -45,12 +73,8 @@ public class wordSearch {
             }
 
             System.out.println(" ");
-
-
         } 
-        
+        return grid;
 
-
-        
     }
 }
